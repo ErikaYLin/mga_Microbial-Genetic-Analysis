@@ -34,7 +34,7 @@ palette2 <- c(environment(khroma::colour("light"))[["col_colors"]][c(1:5)],
 
 ## Sensitivity Analysis
 
-A sensitivity analysis was conducted for the choice of reference libraries. We used Illumina Miseq 2x250 16S region amplicon data collected by Schloss et al. (2016) for a study investigating the stabilization of the murine microbiome after weaning. 
+A sensitivity analysis was conducted for the choice of reference libraries. We used Illumina Miseq 2x250 16S region amplicon data collected by Schloss et al. (2012) for a study investigating the stabilization of the murine microbiome after weaning. 
 
 ```{r bacteria1,  fig.cap = "Sequencing quality profiles for the first two forward sequencing read files, samples F3D0 and F3D1."}
 
