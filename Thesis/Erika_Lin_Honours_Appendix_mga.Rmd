@@ -34,17 +34,17 @@ palette2 <- c(environment(khroma::colour("light"))[["col_colors"]][c(1:5)],
 
 ## Sensitivity Analysis
 
-A sensitivity analysis was conducted for the choice of reference libraries. We used Illumina Miseq 2x250 16S region amplicon data collected by Schloss et al. (2012) for a study investigating the stabilization of the murine microbiome after weaning. 
+A sensitivity analysis was conducted for the choice of reference libraries. We used Illumina Miseq 2x250 16S region amplicon data collected by Schloss et al. (2012) for a study investigating the stabilization of the murine microbiome after weaning. Sequence files were extracted from the zip folder.
 
 ```{r bacteria1,  fig.cap = "Sequencing quality profiles for the first two forward sequencing read files, samples F3D0 and F3D1."}
 
 # Import reference library FASTAs
 ## 16S silva reference FASTA with species
-silva.138.1S <- "./vignettes/silva_nr99_v138.1_wSpecies_train_set.fa.gz"
+silva.138.1S <- "./vignettes/data/silva_nr99_v138.1_wSpecies_train_set.fa.gz"
 ## old 16S silva reference FASTA
-silva.132 <- "./vignettes/silva_nr_v132_train_set.fa.gz" 
+silva.132 <- "./vignettes/data/silva_nr_v132_train_set.fa.gz" 
 ## 16S greengenes reference FASTA
-GG.13.8 <- "./vignettes/gg_13_8_train_set_97.fa.gz" 
+GG.13.8 <- "./vignettes/data/gg_13_8_train_set_97.fa.gz" 
 
 # Import sample metadata
 meta <- read.csv("https://raw.githubusercontent.com/spholmes/F1000_workflow/master/data/MIMARKS_Data_combined.csv")
