@@ -272,12 +272,12 @@ As this process can take time, the outputs were saved as RDA and RDS files and r
 ```{r inspect_mga}
 
 # Load mga results and saved data frame
-load(file = "vignettes/RDS/silva132_mga_results.rda")
-results.df <- readRDS("vignettes/RDS/results.df_silva132_mga.rds")
-load(file = "vignettes/RDS/silva138.1S_mga_results.rda")
-results.df2 <- readRDS("vignettes/RDS/results.df_silva138.1S_mga.rds")
-load(file = "vignettes/RDS/gg13.8_mga_results.rda")
-results.df3 <- readRDS("vignettes/RDS/results.df_gg13.8_mga.rds")
+load(file = "vignettes/data/silva132_mga_results.rda")
+results.df <- readRDS("vignettes/data/results.df_silva132_mga.rds")
+load(file = "vignettes/data/silva138.1S_mga_results.rda")
+results.df2 <- readRDS("vignettes/data/results.df_silva138.1S_mga.rds")
+load(file = "vignettes/data/gg13.8_mga_results.rda")
+results.df3 <- readRDS("vignettes/data/results.df_gg13.8_mga.rds")
 
 # Inspect full mga outcomes
 # silva NR v132
@@ -492,7 +492,7 @@ We used ITS region fungal amplicon data to test the taxonomic filtering function
 ```{r fullfungal1,  fig.cap = "Sequencing quality profiles for the first two reverse sequencing read files, samples F3D0 and F3D1.", fig.width = 6.75, fig.height = 4.5}
 
 # Import ITS fungal reference FASTA
-unite.its <- "./vignettes/sh_general_release_dynamic_29.11.2022.fasta"
+unite.its <- "./vignettes/data/sh_general_release_dynamic_29.11.2022.fasta"
 
 # Import sample metadata
 meta2 <- read.csv("vignettes/Mapping file for ITS sequencing.csv")
@@ -636,7 +636,7 @@ sub.df <- results.df4[results.df4$cover_crop == "Buckwheat" |
 
 ## Restructuring data for easier subsequent handling
 
-# Extract all phyloseq objects from UNITE2 into a list
+# Extract all phyloseq objects from UNITE into a list
 ps.list <- list()
 for (i in 1:length(UNITE)) {
   ps.list[[i]] <- UNITE[[i]]$ps
