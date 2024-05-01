@@ -417,7 +417,7 @@ for (i in 1:10) {
 ```{r compspeed2, message = FALSE, warning = FALSE, fig.height = 4, fig.width = 4.5, fig.cap = "Scatterplot of processing time for increasing sample sizes from one sample to ten samples."}
 
 # Import saved data
-comp_time <- readRDS(file = "vignettes/RDS/comp_time.rds")
+comp_time <- readRDS(file = "vignettes/data/comp_time.rds")
 
 # Empty list to store computation times
 time.df <- list()
@@ -495,7 +495,7 @@ We used ITS region fungal amplicon data to test the taxonomic filtering function
 unite.its <- "./vignettes/data/sh_general_release_dynamic_29.11.2022.fasta"
 
 # Import sample metadata
-meta2 <- read.csv("vignettes/Mapping file for ITS sequencing.csv")
+meta2 <- read.csv("vignettes/data/Mapping file for ITS sequencing.csv")
 
 # Adjust metadata formatting
 colnames(meta2) <- NULL
@@ -613,8 +613,8 @@ The full dataset was used in sequence processing for a separate study characteri
 ```{r Data_wrangling, warning = FALSE, message = FALSE}
 
 # Load fungal data and results
-load(file = "vignettes/RDS/unite.its_mga_results.rda")
-results.df4 <- readRDS("vignettes/RDS/results.df_unite.its_mga.rds")
+load(file = "vignettes/data/unite.its_mga_results.rda")
+results.df4 <- readRDS("vignettes/data/results.df_unite.its_mga.rds")
 
 # Empty list to store subset data
 UNITE <- list()
@@ -678,7 +678,7 @@ A table containing two columns: "taxon" with pathogenic taxon names and "group" 
 ```{r filtering, message = FALSE, warning = FALSE}
 
 # Import .csv file for taxa to keep
-pathogens <- read.csv(file = "vignettes/Plant_Pathogens.csv")
+pathogens <- read.csv(file = "vignettes/data/Plant_Pathogens.csv")
 knitr::kable(pathogens, caption = "Pathogenic taxa to filter for in the each 
              `mga-class` object produced.")
 
@@ -755,55 +755,6 @@ rownames(results.df5) <- results.df5$sample.ID
 pathogen.ps <- phyloseq(otu_table(merge.otu2),
                      tax_table(merge.tax2),
                      sample_data(results.df5))
-
-```
-
-The `drop_taxa()` function currently aggregates the `mga` objects by species after the taxonomic filtering step, however, this pruning steps subsequently remove the names of the taxa used to identify the pathogens. Thus, this function will need to be modified for future updates to the package to simplify data visualization. The following code shows the steps needed to add the labelling taxa back to the filtered `mga` object for ease in relative abundance calculations.
-
-```{r filtering2B, warning = FALSE, message = FALSE}
-
-# Extract taxonomy table from filtered `mga` object
-pathogen <- as.data.frame(tax_table(pathogen.ps))
-spec.names <- pathogen$Species  # save species names
-# Rename species column to include the full binomial.
-pathogen$Species <- paste(pathogen$Genus, pathogen$Species, sep = " ")
-
-# Search for pathogens in taxonomy table
-for (j in 1:nrow(pathogens)) {
-  # Search in Family
-  if ("Family" %in% pathogens$group[j]){
-    for (i in 1:nrow(pathogen)) {
-      if (pathogens$taxon[j] %in% pathogen$Family[i]){
-        pathogen$keep[i] = 1
-        pathogen$keep_taxon[i] = pathogens$taxon[j]
-      }}
-  # Search in Genus
-  } else if ("Genus" %in% pathogens$group[j]){
-    for (i in 1:nrow(pathogen)) {
-      if (pathogens$taxon[j] %in% pathogen$Genus[i]){
-        pathogen$keep[i] = 1
-        if (is.na(pathogen$keep_taxon[i])){
-        pathogen$keep_taxon[i] = pathogens$taxon[j]
-        }}}
-  # search in Species
-  } else if ("Species" %in% pathogens$group[j]){
-    for (i in 1:nrow(pathogen)) {
-      if (pathogens$taxon[j] %in% pathogen$Species[i]){
-        pathogen$keep[i] = 1
-        if (is.na(pathogen$keep_taxon[i])){
-          pathogen$keep_taxon[i] = pathogens$taxon[j]
-        }}}
-  } else {
-    pathogen$keep[i] = 0
-    pathogen$keep_taxon[i] = NA}
-}
-
-# Remove genus from species names
-pathogen$Species <- spec.names
-
-# Update the taxonomy table
-tax = phyloseq::tax_table(as.matrix(pathogen))
-phyloseq::tax_table(pathogen.ps) <- tax
 
 ```
 
@@ -968,17 +919,19 @@ To compare the proportion of pathogenic to non-pathogenic species in each sample
 ps.species <- tax_glom(merge.ps, taxrank = 'Species', NArm = FALSE)
 pathogen.rel2 <- transform_sample_counts(ps.species, function(x) x/sum(x)*100)
 
-# Extract taxonomy table
+# Extract taxonomy tables
+tax <- as.data.frame(tax_table(pathogen.ps))
 tax2 <- as.data.frame(tax_table(pathogen.rel2))
+
 # Rename species column to include the full binomial for both taxonomy tables
+tax$Species <- paste(tax$Genus, tax$Species, sep = " ")
 tax2$Species <- paste(tax2$Genus, tax2$Species, sep = " ")
-pathogen$Species <- paste(pathogen$Genus, pathogen$Species, sep = " ")
 
 # Organize the data for abundance plots
 tax2$pathogenic <- NA
-for (i in 1:nrow(pathogen)) {
+for (i in 1:nrow(tax)) {
   # Identify pathogens
-  tax2$pathogenic[tax2$Species == pathogen$Species[i]] <- "Pathogenic"
+  tax2$pathogenic[tax2$Species == tax$Species[i]] <- "Pathogenic"
 }
 
 # Label non-pathogenic taxa
