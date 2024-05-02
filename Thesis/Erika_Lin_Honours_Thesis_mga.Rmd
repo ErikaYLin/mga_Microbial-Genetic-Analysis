@@ -74,7 +74,7 @@ mga(fastq.Fs, fastq.Rs,  # file paths for forward and reverse raw fastq files
 
 ```
 
-|       We used fungal and bacterial datasets to test the `mga` package for the performance of the main `mga()`, along with additional functions incorporated for subsequent analyses (`drop_taxa()`) and data visualization (`plot.mga`). A sensitivity analysis was also conducted to test for the package’s sensitivity to a subjective user input, such as choice of reference library for taxonomic classification. These analyses have been adapted into vignettes, available with supplementary analyses on GitHub at: https://github.com/ErikaYLin/mga_Microbial-Genetic-Analysis. The package can be installed from GitHub at: https://github.com/ErikaYLin/mga. 
+|       We used fungal and bacterial datasets to test the `mga` package for the performance of the main `mga()`, along with additional functions incorporated for subsequent analyses (`drop_taxa()`) and data visualization (`plot.mga`). A sensitivity analysis was also conducted to test for the package’s sensitivity to a subjective user input, such as choice of reference library for taxonomic classification. These analyses were performed in `R` (v4.3.0; R Core Team, 2023) and have been adapted into vignettes, available with supplementary analyses on GitHub at: https://github.com/ErikaYLin/mga_Microbial-Genetic-Analysis. The package can be installed from GitHub at: https://github.com/ErikaYLin/mga. 
 
 ## **Methods and Materials**
 
