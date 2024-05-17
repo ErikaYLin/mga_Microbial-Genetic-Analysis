@@ -5,6 +5,7 @@ date: "2024-04-24"
 output:
   pdf_document: default
   html_document: default
+bibliography: references_appendix.bib
 ---
 
 ```{r setup, include=FALSE}
@@ -34,7 +35,7 @@ palette2 <- c(environment(khroma::colour("light"))[["col_colors"]][c(1:5)],
 
 ## Sensitivity Analysis
 
-A sensitivity analysis was conducted for the choice of reference libraries. We used Illumina Miseq 2x250 16S region amplicon data collected by Schloss et al. (2012) for a study investigating the stabilization of the murine microbiome after weaning. Sequence files were extracted from the zip folder.
+A sensitivity analysis was conducted for the choice of reference libraries. We used Illumina Miseq 2x250 16S region amplicon data collected by @schloss2012stabilization for a study investigating the stabilization of the murine microbiome after weaning. Sequence files were extracted from the zip folder.
 
 ```{r bacteria1,  fig.cap = "Sequencing quality profiles for the first two forward sequencing read files, samples F3D0 and F3D1."}
 
@@ -114,7 +115,7 @@ out <- dada2::filterAndTrim(fnFs, filtFs, fnRs, filtRs,
 
 ### `mga` Sequence Processing for Bacterial Data
 
-Three separate reference FASTAs were used for the sensitivity analysis to check for differences between older and updated libraries for the same database and between different databases. The Silva and GreenGenes bacterial training FASTAs formatted for DADA2 are shown below. Due to the computation time, results were saved and imported for subsequent analyses.
+Three separate reference FASTAs were used for the sensitivity analysis to check for differences between older and updated libraries for the same database and between different databases. The Silva and GreenGenes bacterial training FASTAs formatted for DADA2 are shown below [@callahan2018silva; @mclaren2021silva; @callahan2016rdp]. Due to the computation time, results were saved and imported for subsequent analyses.
 
 **Silva NR v132 reference library:**
 
@@ -556,7 +557,7 @@ out2 <- dada2::filterAndTrim(fnFs2, filtFs2, fnRs2, filtRs2,
 
 ### `mga` Sequence Processing for Fungal Data
 
-The UNITE General Release ITS FASTA was used as the reference library for taxonomic classification of our fungal sequencing data. Due to the computation time, results were saved and imported for downstream analyses.
+The UNITE General Release ITS FASTA [@abarenkov2022] was used as the reference library for taxonomic classification of our fungal sequencing data. Due to the computation time, results were saved and imported for downstream analyses.
 
 ```{r fullfungi3, eval = FALSE}
 
@@ -760,7 +761,7 @@ pathogen.ps <- phyloseq(otu_table(merge.otu2),
 
 ### Relative Abundance Bar Plots
 
-The relative abundance of all species aggregated by class was calculated. Fungal classes with abundances >1% were combined into a single category.
+The relative abundance of all species aggregated by class was calculated following the workflow by @Hui2021. Fungal classes with abundances >1% were combined into a single category.
 
 ```{r allspecies, warning = FALSE, message = FALSE}
 
@@ -998,4 +999,7 @@ FIG_fin
 
 ```
 
-There is significantly more Nectriaceae present in all samples compared to other pathogenic taxa. This can be partially attributed to the Nectriaceae being a higher taxonomic level under which there are many species. The figure comparing the relative number of pathogenic to non-pathogenic species indicates that the `drop_taxa()` function was able to successfully identify the taxa of interest from the provided table. However, improvements can still be made to reduce the amount of post-filtering data wrangling and relabelling of taxa needed to achieve these resulting figures.
+There is significantly more Nectriaceae present in all samples compared to other pathogenic taxa. This can be partially attributed to the Nectriaceae being a higher taxonomic level under which there are many species. The figure comparing the relative number of pathogenic to non-pathogenic species indicates that the `drop_taxa()` function was able to successfully identify the taxa of interest from the provided table.
+
+\newpage
+## References
